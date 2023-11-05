@@ -4,13 +4,14 @@ This is the source code of my Task 5 submission for [GDCC (Global Data Compressi
 
 See also the very similar [lpaq2g-ibach](https://github.com/GotthardtZ/lpaq2g-ibach) compressor which was submitted for Task 7 ("Compression of Mixed Data").
 
-# The Name
+## The Name
 
 The first part of the name 'lpaq2g-wiese' originates from one of its predecessor, lpaq2, with a suffix 'g' which stands for  'GDCC'.
 
 As a tradition in GDCC, submitted compressors have fantasy names. For Task 7 I chose 'Ibach' and for Task 5 I chose 'Wiese' which are the names of two small rivers in Switzerland near my home.
 
-# What's included?
+## What's included?
+
 - C++ Source code
 - Build script for MinGW-W64 (./build-windows.cmd)
 - Build script for Linux (./build-linux.sh)
@@ -47,14 +48,14 @@ As with other context mixing compressors it processes the input file bit by bit,
 
 lpaq2g-wiese has:
 - Five models. They are:
--- MatchModel (min match length: 6, max match length: 120),
--- Order-1 model,
--- Order-2 model,
--- Order-3 model and
--- Sparse model 2-3
+  - MatchModel (min match length: 6, max match length: 120),
+  - Order-1 model,
+  - Order-2 model,
+  - Order-3 model and
+  - Sparse model 2-3
 - A mixer with 1 context set consisting of a combination of the following states as mixer contexts (resulting in 4*255 = 1020 individual mixer contexts):
--- quantized match length (0-3) and
--- c0, aka the already known bits of the current byte (0-254)
+  - quantized match length (0-3) and
+  - c0, aka the already known bits of the current byte (0-254)
 
 It has:
 - No block detection (segmentation) - if it would have, both compression ratio and time could have been improved
@@ -93,7 +94,7 @@ to decompress:
 
 ...where the optional parameter values (for -lzpMinMatchLen and -lzpMinP) for decompression must match the ones supplied originally for compression.
 
-Sensible threshold values for -lzpMinMatchLen are 0..16. This controls how many bytes of additional match are required for the MatchModel to enter into fast-track (lzp) mode. Setting this value to 0 means that the MatchModel needs no more than the initial 8-byte match, it can enter fast-track mode immediately.
+Sensible threshold values for -lzpMinMatchLen are 0..16. This controls how many bytes of additional match are required for the MatchModel to enter into fast-track (lzp) mode. Setting this value to 0 means that the MatchModel needs no more than the initial 6-byte match, it can enter fast-track mode immediately.
 
 Sensible threshold values for -lzpMinP are in the range of 2048..4000. This sets the minimum probability (scaled by 4096) for the MatchModel to enter into fast-track (lzp) mode. Thus, the value '3350' means that the fast-track mode will not kick in until the matchmodel reaches p=3800/4096=92.78% certainty that he next byte is the predicted one. It will also exit fast-track mode once the prediction falls below this limit.
 
